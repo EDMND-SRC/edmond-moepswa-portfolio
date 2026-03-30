@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { Instagram, Linkedin, Calendar, Sparkles, TrendingUp, ArrowUp, ChevronDown, Plus } from 'lucide-react';
 import { motion, useScroll, useTransform, useInView, useMotionValue, animate, AnimatePresence, useSpring } from 'motion/react';
 import Cal, { getCalApi } from "@calcom/embed-react";
@@ -7,6 +8,7 @@ import LogoMarquee from '@/components/ui/logo-marquee';
 import { Slider } from '@/components/ui/slider';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { toast, Toaster } from 'sonner';
+import { SubstackFeed } from '@/components/SubstackFeed';
 
 const AnimatedNumber = ({ value }: { value: number }) => {
   const safeValue = (typeof value === 'number' && isFinite(value) && !isNaN(value)) ? value : 0;
@@ -1334,12 +1336,12 @@ export default function App() {
       <CalSection />
 
       {/* Free Resources / Gumroad Lead Magnets */}
-      <section className="bg-[#111111] py-24 px-6 md:px-10">
+      <section className="bg-[#111111] py-24 px-6 md:px-10 font-sans">
         <div className="max-w-5xl mx-auto">
           <div className="mb-14">
-            <span className="text-[#FF4D2E] text-sm font-medium uppercase tracking-widest">Free Resources</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mt-3">Download free guides</h2>
-            <p className="text-[#a3a3a3] mt-4 max-w-xl">Practical resources to help you build a better digital presence. Completely free — no strings attached.</p>
+            <span className="text-[#FF4D2E] text-xs font-bold uppercase tracking-[0.2em]">Free Resources</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mt-4 tracking-tight">Download free guides</h2>
+            <p className="text-[#a3a3a3] mt-5 max-w-xl text-lg leading-relaxed">Practical resources to help you build a better digital presence. Completely free — no strings attached.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
@@ -1373,22 +1375,25 @@ export default function App() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.4 }}
-                whileHover={{ y: -4 }}
-                className="bg-[#1A1A1A] rounded-2xl p-6 border border-white/5 hover:border-[#FF4D2E]/30 transition-colors group cursor-pointer flex flex-col"
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                whileHover={{ y: -8 }}
+                className="bg-[#1A1A1A] rounded-2xl p-8 border border-white/5 hover:border-[#FF4D2E]/40 transition-all duration-300 group cursor-pointer flex flex-col shadow-2xl"
               >
-                <span className="text-3xl mb-4">{item.icon}</span>
-                <span className="text-[#FF4D2E] text-xs font-medium uppercase tracking-widest mb-2">{item.tag} · Free</span>
-                <h3 className="text-white font-semibold text-lg mb-3 leading-snug group-hover:text-[#FF4D2E] transition-colors">{item.title}</h3>
-                <p className="text-[#a3a3a3] text-sm flex-1">{item.desc}</p>
-                <div className="mt-6 flex items-center gap-2 text-[#FF4D2E] text-sm font-medium">
-                  Download free <span>→</span>
+                <span className="text-4xl mb-6">{item.icon}</span>
+                <span className="text-[#FF4D2E] text-[10px] font-bold uppercase tracking-[0.15em] mb-3">{item.tag} · Free</span>
+                <h3 className="text-white font-bold text-xl mb-4 leading-tight group-hover:text-[#FF4D2E] transition-colors">{item.title}</h3>
+                <p className="text-[#a3a3a3] text-sm flex-1 leading-relaxed">{item.desc}</p>
+                <div className="mt-8 flex items-center gap-2 text-[#FF4D2E] text-sm font-bold group-hover:gap-3 transition-all">
+                  Download Free <span className="text-lg">→</span>
                 </div>
               </motion.a>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Substack Feed */}
+      <SubstackFeed />
 
       {/* Contact & Legal */}
       <section className="bg-[#0a0a0a] py-20 px-6 md:px-10 border-t border-white/5">
@@ -1424,62 +1429,17 @@ export default function App() {
             </div>
             <div>
               <h2 className="text-2xl font-bold text-white mb-6">Quick Links</h2>
-              <ul className="space-y-3 text-[#a3a3a3]">
-                <li><a href="#refund-policy" className="hover:text-white transition-colors">Refund & Dispute Policy</a></li>
-                <li><a href="#cancellation-policy" className="hover:text-white transition-colors">Cancellation Policy</a></li>
-                <li><a href="#terms" className="hover:text-white transition-colors">Terms & Conditions</a></li>
-                <li><a href="#legal" className="hover:text-white transition-colors">Legal Restrictions</a></li>
+              <ul className="space-y-4 text-[#a3a3a3]">
+                <li><Link href="/refund-policy" className="hover:text-[#FF4D2E] transition-colors font-medium">Refund & Dispute Policy</Link></li>
+                <li><Link href="/cancellation-policy" className="hover:text-[#FF4D2E] transition-colors font-medium">Cancellation Policy</Link></li>
+                <li><Link href="/terms-and-conditions" className="hover:text-[#FF4D2E] transition-colors font-medium">Terms & Conditions</Link></li>
+                <li><Link href="/legal-restrictions" className="hover:text-[#FF4D2E] transition-colors font-medium">Legal Restrictions</Link></li>
               </ul>
             </div>
           </div>
 
-          {/* Refund & Dispute Policy */}
-          <div id="refund-policy" className="mb-12 scroll-mt-20">
-            <h3 className="text-xl font-bold text-white mb-4">Refund & Dispute Policy</h3>
-            <div className="text-[#a3a3a3] text-sm space-y-3 leading-relaxed">
-              <p>All projects require a <strong className="text-white">50% non-refundable deposit</strong> before work commences. The remaining balance is due upon project completion and before final file delivery.</p>
-              <p>Refunds may be considered if: (1) work has not yet commenced, (2) a material breach of the agreed project scope has occurred on our part. Refund requests must be submitted in writing within 7 days of the triggering event.</p>
-              <p>For digital product purchases (guides, templates), all sales are final. If you experience a technical issue accessing your download, contact <a href="mailto:edmond.moepswa@gmail.com" className="text-[#FF4D2E] hover:underline">edmond.moepswa@gmail.com</a> and we will resolve it within 48 hours.</p>
-              <p>Disputes should first be raised directly via email. If unresolved within 14 days, disputes are governed by the laws of Botswana.</p>
-            </div>
-          </div>
 
-          {/* Cancellation Policy */}
-          <div id="cancellation-policy" className="mb-12 scroll-mt-20">
-            <h3 className="text-xl font-bold text-white mb-4">Cancellation Policy</h3>
-            <div className="text-[#a3a3a3] text-sm space-y-3 leading-relaxed">
-              <p><strong className="text-white">Discovery calls</strong> may be cancelled or rescheduled with at least <strong className="text-white">24 hours' notice</strong> at no charge. Cancellations within 24 hours forfeit the time slot and may delay rescheduling.</p>
-              <p><strong className="text-white">Active projects</strong> may be cancelled by either party with 14 days' written notice. Work completed up to the cancellation date will be invoiced at a pro-rated daily rate, and the deposit will be applied against this amount. Any excess deposit is non-refundable.</p>
-              <p>We reserve the right to terminate an engagement immediately if a client engages in abusive conduct, requests illegal work, or fails to make agreed payments after two reminders.</p>
-            </div>
-          </div>
-
-          {/* Legal Restrictions */}
-          <div id="legal" className="mb-12 scroll-mt-20">
-            <h3 className="text-xl font-bold text-white mb-4">Legal Restrictions</h3>
-            <div className="text-[#a3a3a3] text-sm space-y-3 leading-relaxed">
-              <p>Our services are available only to clients aged 18 and over, or businesses operating lawfully in their jurisdiction. We do not accept projects that involve: illegal content, gambling (unlicensed), adult content, deceptive practices, or activities that violate applicable law.</p>
-              <p>All designs, code, and deliverables created remain the intellectual property of Edmond Moepswa until full payment is received, at which point ownership transfers to the client as outlined in the project agreement.</p>
-              <p>We are located in Gaborone, Botswana. All engagements are governed by the laws of the Republic of Botswana.</p>
-            </div>
-          </div>
-
-          {/* Terms & Conditions */}
-          <div id="terms" className="mb-8 scroll-mt-20">
-            <h3 className="text-xl font-bold text-white mb-4">Terms & Conditions</h3>
-            <div className="text-[#a3a3a3] text-sm space-y-3 leading-relaxed">
-              <p><strong className="text-white">1. Services.</strong> Edmond Moepswa ("we", "us") provides web design, web development, branding, and product design services as described on this website. All work is subject to a signed project brief or agreement.</p>
-              <p><strong className="text-white">2. Payment.</strong> A 50% deposit is required before project commencement. Final payment is due before delivery of final files. Late payments incur a 5% monthly fee.</p>
-              <p><strong className="text-white">3. Revisions.</strong> Each project includes a defined number of revision rounds as agreed. Additional revisions are billed at our standard hourly rate.</p>
-              <p><strong className="text-white">4. Client Responsibilities.</strong> Clients must provide accurate content, timely feedback, and necessary access to proceed. Delays caused by the client may affect timelines and attract additional charges.</p>
-              <p><strong className="text-white">5. Confidentiality.</strong> We treat all client information as confidential and will not disclose it to third parties without consent, except as required by law.</p>
-              <p><strong className="text-white">6. Liability.</strong> Our liability is limited to the value of the project fee paid. We are not liable for indirect or consequential losses.</p>
-              <p><strong className="text-white">7. Amendments.</strong> These terms may be updated at any time. The version in effect at the time of your project agreement applies to that engagement.</p>
-              <p className="text-[#666] text-xs pt-2">Last updated: March 2026</p>
-            </div>
-          </div>
-
-          <p className="text-[#444] text-xs text-center pt-8 border-t border-white/5">
+          <p className="text-[#444] text-[10px] font-bold tracking-[0.2em] text-center pt-8 border-t border-white/5 uppercase">
             © {new Date().getFullYear()} Edmond Moepswa. All rights reserved. · Gaborone, Botswana · <a href="mailto:edmond.moepswa@gmail.com" className="hover:text-[#FF4D2E] transition-colors">edmond.moepswa@gmail.com</a>
           </p>
         </div>

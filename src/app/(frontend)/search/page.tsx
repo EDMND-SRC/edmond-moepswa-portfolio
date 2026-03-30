@@ -72,8 +72,8 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
         </div>
       </div>
 
-      {posts.totalDocs > 0 ? (
-        <CollectionArchive posts={posts.docs as CardPostData[]} />
+      {posts.docs.length > 0 ? (
+        <CollectionArchive posts={posts.docs as any} />
       ) : (
         <div className="container">No results found.</div>
       )}
@@ -83,6 +83,6 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Search`,
+    title: `Search | Edmond Moepswa`,
   }
 }
